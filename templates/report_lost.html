@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Report Lost Item | Campus Item Recovery Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(37, 99, 235, 0.17),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f8fafc
+                );
+
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: rgba(255,255,255,0.94);
+
+            border-bottom: 1px solid #e2e8f0;
+
+            padding: 17px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            backdrop-filter: blur(10px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            color: #172554;
+
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: #172554;
+            color: white;
+        }
+
+        .nav-link {
+            color: #475569;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .nav-link:hover {
+            color: #2563eb;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1050px;
+
+            margin: 42px auto;
+        }
+
+        .layout {
+            display: grid;
+
+            grid-template-columns: 0.75fr 1.25fr;
+
+            gap: 25px;
+
+            align-items: stretch;
+        }
+
+        .info-panel {
+            padding: 34px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #172554,
+                    #1e3a8a
+                );
+
+            color: white;
+
+            box-shadow:
+                0 18px 45px rgba(23,37,84,0.18);
+        }
+
+        .info-icon {
+            width: 62px;
+            height: 62px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 17px;
+
+            background: rgba(255,255,255,0.13);
+
+            font-size: 28px;
+
+            margin-bottom: 20px;
+        }
+
+        .info-panel h1 {
+            font-size: 31px;
+
+            line-height: 1.15;
+
+            margin-bottom: 12px;
+        }
+
+        .info-panel p {
+            color: #dbeafe;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+        .tips {
+            display: grid;
+            gap: 13px;
+        }
+
+        .tip {
+            display: flex;
+            gap: 10px;
+
+            font-size: 13px;
+            line-height: 1.5;
+
+            color: #eff6ff;
+        }
+
+        .tip span {
+            color: #93c5fd;
+        }
+
+        .card {
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 20px;
+
+            padding: 32px;
+
+            box-shadow:
+                0 18px 45px rgba(15,23,42,0.08);
+        }
+
+        .card h2 {
+            color: #172554;
+
+            font-size: 26px;
+
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin-bottom: 24px;
+        }
+
+        .flash {
+            background: #fee2e2;
+            color: #991b1b;
+
+            padding: 12px 14px;
+
+            border-radius: 9px;
+
+            margin-bottom: 17px;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            background: white;
+
+            font-size: 14px;
+
+            color: #1e293b;
+
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37,99,235,0.12);
+        }
+
+        textarea {
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+        .grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+        }
+
+        .submit-btn {
+            width: 100%;
+
+            border: none;
+
+            border-radius: 9px;
+
+            padding: 14px;
+
+            background: #2563eb;
+            color: white;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            transition: 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 10px 22px rgba(37,99,235,0.20);
+        }
+
+        .back {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            color: #64748b;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .back:hover {
+            color: #2563eb;
+        }
+
+        .footer {
+            text-align: center;
+
+            margin-top: 30px;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+        }
+
+        @media (max-width: 850px) {
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 92%;
+                margin: 25px auto;
+            }
+
+            .card,
+            .info-panel {
+                padding: 24px 20px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <nav class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🔎
+            </div>
+
+            Campus Item Recovery Portal
+
+        </div>
+
+        <a
+            href="/dashboard"
+            class="nav-link"
+        >
+            ← Dashboard
+        </a>
+
+    </nav>
+
+
+    <div class="container">
+
+
+        <div class="layout">
+
+
+            <div class="info-panel">
+
+                <div class="info-icon">
+                    🎒
+                </div>
+
+                <h1>
+                    Report Your Lost Item
+                </h1>
+
+                <p>
+                    Provide accurate details about the item you lost.
+                    These details help the system identify possible
+                    matches with found items on campus.
+                </p>
+
+
+                <div class="tips">
+
+                    <div class="tip">
+                        <span>✓</span>
+                        Use the exact item name whenever possible.
+                    </div>
+
+                    <div class="tip">
+                        <span>✓</span>
+                        Mention recognizable marks or features.
+                    </div>
+
+                    <div class="tip">
+                        <span>✓</span>
+                        Enter the location where you last saw it.
+                    </div>
+
+                    <div class="tip">
+                        <span>✓</span>
+                        Add a clear and useful description.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>
+                    Lost Item Details
+                </h2>
+
+                <p class="subtitle">
+                    Enter the details below to create your lost-item report.
+                </p>
+
+
+                {% with messages = get_flashed_messages() %}
+
+                    {% if messages %}
+
+                        {% for message in messages %}
+
+                            <div class="flash">
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    {% endif %}
+
+                {% endwith %}
+
+
+                <form
+                    method="POST"
+                    action="/report-lost"
+                >
+
+
+                    <div class="form-group">
+
+                        <label for="item_name">
+                            Item Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="item_name"
+                            name="item_name"
+                            placeholder="Example: Black Wallet"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select
+                            id="category"
+                            name="category"
+                            required
+                        >
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="Electronics">
+                                Electronics
+                            </option>
+
+                            <option value="Documents">
+                                Documents
+                            </option>
+
+                            <option value="Accessories">
+                                Accessories
+                            </option>
+
+                            <option value="Books">
+                                Books
+                            </option>
+
+                            <option value="Clothing">
+                                Clothing
+                            </option>
+
+                            <option value="Others">
+                                Others
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            placeholder="Describe the item, color, brand, marks, stickers, damage, etc."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="grid">
+
+
+                        <div class="form-group">
+
+                            <label for="lost_location">
+                                Lost Location
+                            </label>
+
+                            <input
+                                type="text"
+                                id="lost_location"
+                                name="lost_location"
+                                placeholder="Example: College Library"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="lost_date">
+                                Lost Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="lost_date"
+                                name="lost_date"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="submit-btn"
+                    >
+                        🔎 Submit Lost Item
+                    </button>
+
+
+                </form>
+
+
+                <a
+                    href="/dashboard"
+                    class="back"
+                >
+                    ← Back to Dashboard
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer">
+
+            Campus Item Recovery Portal · Lost &amp; Found Management System
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
