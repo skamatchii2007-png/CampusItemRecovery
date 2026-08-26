@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Matches | Campus Item Recovery Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: #172554;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 14px;
+            border-radius: 7px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .logout {
+            background: #dc2626;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .header,
+        .lost-card,
+        .match-card,
+        .empty {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+        }
+
+        .header {
+            padding: 28px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #172554;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 10px 16px;
+            background: #e2e8f0;
+            color: #334155;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .lost-card {
+            padding: 24px;
+            margin-bottom: 25px;
+        }
+
+        .lost-card h2 {
+            color: #172554;
+            margin-bottom: 14px;
+        }
+
+        .lost-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .detail {
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .detail strong {
+            display: block;
+            color: #334155;
+            margin-bottom: 3px;
+        }
+
+        .matches-title {
+            color: #172554;
+            margin-bottom: 15px;
+        }
+
+        .match-card {
+            padding: 22px;
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+
+        .match-header h3 {
+            color: #172554;
+            font-size: 20px;
+        }
+
+        .score {
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 7px 11px;
+            border-radius: 18px;
+            font-weight: bold;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .match-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            background: #f8fafc;
+            padding: 13px;
+            border-radius: 9px;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .claim-btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            background: #16a34a;
+            color: white;
+            text-decoration: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .claim-btn:hover {
+            background: #15803d;
+        }
+
+        .claim-status {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .empty {
+            padding: 45px 25px;
+            text-align: center;
+        }
+
+        .empty h2 {
+            color: #172554;
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 35px 10px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        @media (max-width: 750px) {
+
+            .lost-details,
+            .match-details {
+                grid-template-columns: 1fr;
+            }
+
+            .match-header {
+                flex-direction: column;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class="navbar">
+
+        <div class="logo">
+            Campus Item Recovery Portal
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/found-items">
+                Found Items
+            </a>
+
+            <a href="/my-claims">
+                My Claims
+            </a>
+
+            <a href="/notifications">
+                Notifications
+            </a>
+
+            <a
+                href="/logout"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <div class="header">
+
+            <h1>
+                🔎 Possible Matches
+            </h1>
+
+            <p>
+                These are found items that match the details
+                of your own lost-item reports. Claim requests
+                are available only from these matching results.
+            </p>
+
+            <a
+                href="/dashboard"
+                class="back-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+
+        {% if match_results %}
+
+            {% for result in match_results %}
+
+                <div class="lost-card">
+
+                    <h2>
+                        Lost Item:
+                        {{ result.lost_item.item_name }}
+                    </h2>
+
+
+                    <div class="lost-details">
+
+                        <div class="detail">
+                            <strong>Category</strong>
+                            {{ result.lost_item.category }}
+                        </div>
+
+                        <div class="detail">
+                            <strong>Lost Location</strong>
+                            {{ result.lost_item.lost_location }}
+                        </div>
+
+                        <div class="detail">
+                            <strong>Lost Date</strong>
+                            {{ result.lost_item.lost_date }}
+                        </div>
+
+                    </div>
+
+
+                    <br>
+
+
+                    {% if result.matches %}
+
+                        <h3 class="matches-title">
+                            Matching Found Items
+                        </h3>
+
+
+                        {% for match in result.matches %}
+
+                            <div class="match-card">
+
+
+                                <div class="match-header">
+
+                                    <h3>
+                                        {{ match.item.item_name }}
+                                    </h3>
+
+                                    <span class="score">
+                                        Match Score:
+                                        {{ match.score }}%
+                                    </span>
+
+                                </div>
+
+
+                                <div class="match-details">
+
+                                    <div class="detail">
+                                        <strong>Category</strong>
+                                        {{ match.item.category }}
+                                    </div>
+
+                                    <div class="detail">
+                                        <strong>Found Location</strong>
+                                        {{ match.item.found_location }}
+                                    </div>
+
+                                    <div class="detail">
+                                        <strong>Found Date</strong>
+                                        {{ match.item.found_date }}
+                                    </div>
+
+                                    <div class="detail">
+                                        <strong>Item ID</strong>
+                                        {{ match.item.id }}
+                                    </div>
+
+                                </div>
+
+
+                                <div class="description">
+
+                                    <strong>
+                                        Description:
+                                    </strong>
+
+                                    <br>
+
+                                    {{ match.item.description }}
+
+                                </div>
+
+
+                                {% if match.claim_status == "Pending" %}
+
+                                    <div class="claim-status pending">
+                                        ⏳ Claim Request Already Submitted —
+                                        Waiting for Admin
+                                    </div>
+
+
+                                {% elif match.claim_status == "Approved" %}
+
+                                    <div class="claim-status approved">
+                                        ✅ Claim Approved —
+                                        Item Recovered
+                                    </div>
+
+
+                                {% elif match.claim_status == "Rejected" %}
+
+                                    <div class="claim-status rejected">
+                                        ❌ Claim Already Rejected —
+                                        This item cannot be claimed again by you
+                                    </div>
+
+
+                                {% else %}
+
+                                    <a
+                                        href="{{ url_for('claim_item', item_id=match.item.id) }}"
+                                        class="claim-btn"
+                                    >
+                                        🔐 Submit Claim Request
+                                    </a>
+
+                                {% endif %}
+
+
+                            </div>
+
+                        {% endfor %}
+
+
+                    {% else %}
+
+                        <div class="empty">
+
+                            <h2>
+                                No Possible Match Found
+                            </h2>
+
+                            <p>
+                                No found item currently reaches
+                                the required match score for this lost item.
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <div class="empty">
+
+                <h2>
+                    No Lost Items Reported
+                </h2>
+
+                <p>
+                    Please report a lost item first.
+                    Matching found items will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    <div class="footer">
+
+        Campus Item Recovery Portal<br>
+        Lost &amp; Found Management System
+
+    </div>
+
+
+</body>
+
+</html>
