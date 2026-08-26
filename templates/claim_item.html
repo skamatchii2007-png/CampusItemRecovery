@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Claims | Campus Item Recovery Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: #172554;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 14px;
+            border-radius: 7px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .logout {
+            background: #dc2626;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1150px;
+            margin: 30px auto;
+        }
+
+        .header {
+            background: white;
+            padding: 28px;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #172554;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 18px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 11px 17px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            background: #1d4ed8;
+        }
+
+        .flash {
+            background: #dcfce7;
+            color: #166534;
+            padding: 14px 18px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .claim-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            margin-bottom: 18px;
+            border-left: 5px solid #cbd5e1;
+        }
+
+        .claim-card.pending-card {
+            border-left-color: #f59e0b;
+        }
+
+        .claim-card.approved-card {
+            border-left-color: #16a34a;
+        }
+
+        .claim-card.rejected-card {
+            border-left-color: #dc2626;
+        }
+
+        .claim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .claim-header h2 {
+            color: #172554;
+            font-size: 20px;
+        }
+
+        .badge {
+            padding: 7px 13px;
+            border-radius: 18px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .detail {
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .detail strong {
+            color: #1e293b;
+        }
+
+        .reason {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            padding: 14px;
+            border-radius: 9px;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .admin-message {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            border-radius: 9px;
+            color: #475569;
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .btn {
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .approve-btn {
+            background: #16a34a;
+        }
+
+        .approve-btn:hover {
+            background: #15803d;
+        }
+
+        .reject-btn {
+            background: #dc2626;
+        }
+
+        .reject-btn:hover {
+            background: #b91c1c;
+        }
+
+        .item-status {
+            margin-top: 15px;
+            padding: 11px 14px;
+            border-radius: 8px;
+            background: #f8fafc;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .empty {
+            background: white;
+            text-align: center;
+            padding: 50px 20px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            color: #64748b;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 35px 10px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .claim-header {
+                flex-direction: column;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Campus Item Recovery Portal
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/admin-dashboard">
+                Dashboard
+            </a>
+
+            <a href="/admin/users">
+                Manage Users
+            </a>
+
+            <a
+                href="/logout"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <h1>
+                📋 Claim History
+            </h1>
+
+            <p>
+                View all claim requests submitted by users.
+                Pending claims can be approved or rejected.
+                Processed claims remain here as history.
+            </p>
+
+            <a
+                href="/admin-dashboard"
+                class="back-button"
+            >
+                ← Back to Admin Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- FLASH -->
+
+        {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="flash">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- CLAIMS -->
+
+        {% if claim_details %}
+
+
+            {% for detail in claim_details %}
+
+
+                {% if detail.claim.status == "Pending" %}
+
+                    <div class="claim-card pending-card">
+
+                {% elif detail.claim.status == "Approved" %}
+
+                    <div class="claim-card approved-card">
+
+                {% else %}
+
+                    <div class="claim-card rejected-card">
+
+                {% endif %}
+
+
+                    <div class="claim-header">
+
+                        <h2>
+
+                            {% if detail.item %}
+
+                                {{ detail.item.item_name }}
+
+                            {% else %}
+
+                                Found Item
+
+                            {% endif %}
+
+                        </h2>
+
+
+                        {% if detail.claim.status == "Pending" %}
+
+                            <span class="badge pending">
+                                Pending
+                            </span>
+
+                        {% elif detail.claim.status == "Approved" %}
+
+                            <span class="badge approved">
+                                Approved
+                            </span>
+
+                        {% elif detail.claim.status == "Rejected" %}
+
+                            <span class="badge rejected">
+                                Rejected
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="detail-grid">
+
+
+                        <div class="detail">
+
+                            <strong>Claim ID:</strong>
+                            {{ detail.claim.id }}
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <strong>User ID:</strong>
+
+                            {% if detail.user %}
+
+                                {{ detail.user.id }}
+
+                            {% else %}
+
+                                {{ detail.claim.user_id }}
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <strong>User Name:</strong>
+
+                            {% if detail.user %}
+
+                                {{ detail.user.name }}
+
+                            {% else %}
+
+                                Unknown User
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <strong>User Email:</strong>
+
+                            {% if detail.user %}
+
+                                {{ detail.user.email }}
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </div>
+
+
+                    </div>
+
+
+                    {% if detail.item %}
+
+                        <div class="detail-grid">
+
+                            <div class="detail">
+
+                                <strong>Category:</strong>
+                                {{ detail.item.category }}
+
+                            </div>
+
+                            <div class="detail">
+
+                                <strong>Found Location:</strong>
+                                {{ detail.item.found_location }}
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="reason">
+
+                        <strong>
+                            Claim Reason:
+                        </strong>
+
+                        <br>
+
+                        {{ detail.claim.claim_reason }}
+
+                    </div>
+
+
+                    {% if detail.claim.admin_message %}
+
+                        <div class="admin-message">
+
+                            <strong>
+                                Admin Message:
+                            </strong>
+
+                            <br>
+
+                            {{ detail.claim.admin_message }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if detail.item %}
+
+                        <div class="item-status">
+
+                            <strong>
+                                Item Status:
+                            </strong>
+
+                            {{ detail.item.status }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if detail.claim.status == "Pending" %}
+
+                        <div class="actions">
+
+
+                            <form
+                                method="POST"
+                                action="/admin/approve-claim/{{ detail.claim.id }}"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="btn approve-btn"
+                                >
+                                    ✓ Approve Claim
+                                </button>
+
+                            </form>
+
+
+                            <form
+                                method="POST"
+                                action="/admin/reject-claim/{{ detail.claim.id }}"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="btn reject-btn"
+                                >
+                                    ✕ Reject Claim
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <div class="empty">
+
+                <h2>
+                    No Claims Found
+                </h2>
+
+                <p>
+                    No claim requests have been submitted yet.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    <div class="footer">
+
+        Campus Item Recovery Portal<br>
+        Lost & Found Management System
+
+    </div>
+</body></html>
