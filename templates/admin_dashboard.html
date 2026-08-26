@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Dashboard | Campus Item Recovery Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: #172554;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 14px;
+            border-radius: 7px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .logout {
+            background: #dc2626;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1250px;
+            margin: 30px auto;
+        }
+
+        .welcome {
+            background: white;
+            padding: 28px;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            color: #172554;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .admin-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .admin-link {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 11px 17px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .admin-link:hover {
+            background: #1d4ed8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .stat {
+            background: white;
+            padding: 22px;
+            border-radius: 13px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .stat:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.10);
+        }
+
+        .stat-number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #172554;
+            margin-bottom: 6px;
+        }
+
+        .stat-title {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .click-note {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            color: #172554;
+            margin-bottom: 20px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .view-all {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 9px 14px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .view-all:hover {
+            background: #1d4ed8;
+        }
+
+        .item-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 11px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: #f8fafc;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .item-header h3 {
+            color: #172554;
+        }
+
+        .badge {
+            padding: 6px 11px;
+            border-radius: 18px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .received {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .submitted {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .lost {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .claimed {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .detail {
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .detail strong {
+            color: #1e293b;
+        }
+
+        .description {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            color: #475569;
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .actions form {
+            margin: 0;
+        }
+
+        .btn {
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .receive-btn {
+            background: #16a34a;
+        }
+
+        .receive-btn:hover {
+            background: #15803d;
+        }
+
+        .approve-btn {
+            background: #16a34a;
+        }
+
+        .approve-btn:hover {
+            background: #15803d;
+        }
+
+        .reject-btn {
+            background: #dc2626;
+        }
+
+        .reject-btn:hover {
+            background: #b91c1c;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .claim-reason {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            padding: 13px;
+            border-radius: 8px;
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 35px 10px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .item-header {
+                flex-direction: column;
+            }
+
+            .section-heading {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Campus Item Recovery Portal
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/admin/users">
+                Manage Users
+            </a>
+
+            <a
+                href="/logout"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h1>
+                🛡️ Admin Dashboard
+            </h1>
+
+            <p>
+                Welcome, {{ name }}. Manage found items,
+                lost items and claim requests from here.
+            </p>
+
+            <div class="admin-links">
+
+                <a
+                    href="/admin/users"
+                    class="admin-link"
+                >
+                    👥 Manage Users
+                </a>
+
+                <a
+                    href="/admin/add-user"
+                    class="admin-link"
+                >
+                    ➕ Add User
+                </a>
+
+                <a
+                    href="/admin/claims"
+                    class="admin-link"
+                >
+                    📋 View All Claims
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats">
+
+
+            <!-- FOUND ITEMS -->
+
+            <a
+                href="#found-items-section"
+                class="stat-link"
+            >
+
+                <div class="stat">
+
+                    <div class="stat-number">
+                        {{ found_items|length }}
+                    </div>
+
+                    <div class="stat-title">
+                        Found Items
+                    </div>
+
+                    <div class="click-note">
+                        View Found Items →
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <!-- LOST ITEMS -->
+
+            <a
+                href="#lost-items-section"
+                class="stat-link"
+            >
+
+                <div class="stat">
+
+                    <div class="stat-number">
+                        {{ lost_items|length }}
+                    </div>
+
+                    <div class="stat-title">
+                        Lost Items
+                    </div>
+
+                    <div class="click-note">
+                        View Lost Items →
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <!-- TOTAL CLAIMS -->
+
+            <a
+                href="/admin/claims"
+                class="stat-link"
+            >
+
+                <div class="stat">
+
+                    <div class="stat-number">
+                        {{ total_claims_count }}
+                    </div>
+
+                    <div class="stat-title">
+                        Total Claims
+                    </div>
+
+                    <div class="click-note">
+                        Click to view claims →
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <!-- PENDING CLAIMS -->
+
+            <a
+                href="#pending-claims-section"
+                class="stat-link"
+            >
+
+                <div class="stat">
+
+                    <div class="stat-number">
+                        {{ pending_claims_count }}
+                    </div>
+
+                    <div class="stat-title">
+                        Pending Claims
+                    </div>
+
+                    <div class="click-note">
+                        Review pending →
+                    </div>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+
+        <!-- FOUND ITEMS -->
+
+        <div
+            class="section"
+            id="found-items-section"
+        >
+
+            <div class="section-heading">
+
+                <h2>
+                    📦 Found Items
+                </h2>
+
+            </div>
+
+
+            {% if found_items %}
+
+
+                {% for item in found_items %}
+
+                    <div class="item-card">
+
+                        <div class="item-header">
+
+                            <h3>
+                                {{ item.item_name }}
+                            </h3>
+
+
+                            {% if item.status == "Received by Admin" %}
+
+                                <span class="badge received">
+                                    Received by Admin
+                                </span>
+
+                            {% elif item.status == "Claimed / Recovered" %}
+
+                                <span class="badge claimed">
+                                    Claimed / Recovered
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge submitted">
+                                    {{ item.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="detail-grid">
+
+                            <div class="detail">
+
+                                <strong>Category:</strong>
+                                {{ item.category }}
+
+                            </div>
+
+                            <div class="detail">
+
+                                <strong>Found Location:</strong>
+                                {{ item.found_location }}
+
+                            </div>
+
+                            <div class="detail">
+
+                                <strong>Found Date:</strong>
+                                {{ item.found_date }}
+
+                            </div>
+
+                            <div class="detail">
+
+                                <strong>Reported By User ID:</strong>
+                                {{ item.user_id }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="description">
+
+                            <strong>Description:</strong><br>
+
+                            {{ item.description }}
+
+                        </div>
+
+
+                        {% if item.status == "Submitted to Admin" %}
+
+                            <div class="actions">
+
+                                <form
+                                    method="POST"
+                                    action="/admin/receive-found/{{ item.id }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn receive-btn"
+                                    >
+                                        ✓ Receive Item
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        {% elif item.status == "Received by Admin" %}
+
+                            <div class="admin-note">
+                                ✓ Physical item received by Admin.
+                                Awaiting claim verification.
+                            </div>
+
+                        {% elif item.status == "Claimed / Recovered" %}
+
+                            <div class="admin-note">
+                                ✓ This item has already been claimed
+                                and recovered.
+                            </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+                {% endfor %}
+
+
+            {% else %}
+
+                <div class="empty">
+                    No found items have been reported yet.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- LOST ITEMS -->
+
+        <div
+            class="section"
+            id="lost-items-section"
+        >
+
+            <div class="section-heading">
+
+                <h2>
+                    🔍 Lost Items
+                </h2>
+
+            </div>
+
+
+            {% if lost_items %}
+
+
+                {% for item in lost_items %}
+
+                    <div class="item-card">
+
+                        <div class="item-header">
+
+                            <h3>
+                                {{ item.item_name }}
+                            </h3>
+
+                            <span class="badge lost">
+                                {{ item.status }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-grid">
+
+                            <div class="detail">
+
+                                <strong>Category:</strong>
+                                {{ item.category }}
+
+                            </div>
+
+                            <div class="detail">
+
+                                <strong>Lost Location:</strong>
+                                {{ item.lost_location }}
+
+                            </div>
+
+                            <div class="detail">
+
+                                <strong>Lost Date:</strong>
+                                {{ item.lost_date }}
+
+                            </div>
+
+                            <div class="detail">
+
+                                <strong>Reported By User ID:</strong>
+                                {{ item.user_id }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="description">
+
+                            <strong>Description:</strong><br>
+
+                            {{ item.description }}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+
+            {% else %}
+
+                <div class="empty">
+                    No lost items have been reported yet.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- PENDING CLAIMS ONLY -->
+
+        <div
+            class="section"
+            id="pending-claims-section"
+        >
+
+            <div class="section-heading">
+
+                <h2>
+                    📋 Pending Claim Requests
+                </h2>
+
+                <a
+                    href="/admin/claims"
+                    class="view-all"
+                >
+                    View All Claims
+                </a>
+
+            </div>
+
+
+            {% if claim_details %}
+
+
+                {% for detail in claim_details %}
+
+                    <div class="item-card">
+
+
+                        <div class="item-header">
+
+                            <h3>
+
+                                {% if detail.item %}
+
+                                    {{ detail.item.item_name }}
+
+                                {% else %}
+
+                                    Found Item
+
+                                {% endif %}
+
+                            </h3>
+
+                            <span class="badge pending">
+                                Pending
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-grid">
+
+
+                            <div class="detail">
+
+                                <strong>Claim ID:</strong>
+                                {{ detail.claim.id }}
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <strong>User ID:</strong>
+
+                                {% if detail.user %}
+
+                                    {{ detail.user.id }}
+
+                                {% else %}
+
+                                    {{ detail.claim.user_id }}
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <strong>User Name:</strong>
+
+                                {% if detail.user %}
+
+                                    {{ detail.user.name }}
+
+                                {% else %}
+
+                                    Unknown User
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <strong>User Email:</strong>
+
+                                {% if detail.user %}
+
+                                    {{ detail.user.email }}
+
+                                {% else %}
+
+                                    -
+
+                                {% endif %}
+
+                            </div>
+
+
+                        </div>
+
+
+                        {% if detail.item %}
+
+                            <div class="detail-grid">
+
+                                <div class="detail">
+
+                                    <strong>Category:</strong>
+                                    {{ detail.item.category }}
+
+                                </div>
+
+                                <div class="detail">
+
+                                    <strong>Found Location:</strong>
+                                    {{ detail.item.found_location }}
+
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="claim-reason">
+
+                            <strong>
+                                Claim Reason:
+                            </strong>
+
+                            <br>
+
+                            {{ detail.claim.claim_reason }}
+
+                        </div>
+
+
+                        <div class="actions">
+
+
+                            <form
+                                method="POST"
+                                action="/admin/approve-claim/{{ detail.claim.id }}"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="btn approve-btn"
+                                >
+                                    ✓ Approve Claim
+                                </button>
+
+                            </form>
+
+
+                            <form
+                                method="POST"
+                                action="/admin/reject-claim/{{ detail.claim.id }}"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="btn reject-btn"
+                                >
+                                    ✕ Reject Claim
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+
+                {% endfor %}
+
+
+            {% else %}
+
+                <div class="empty">
+
+                    <h3>
+                        No Pending Claims
+                    </h3>
+
+                    <p>
+                        All claim requests have been processed.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer">
+
+        Campus Item Recovery Portal<br>
+        Lost & Found Management System
+
+    </div>
+
+
+</body>
+
+</html>
