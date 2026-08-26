@@ -1,0 +1,477 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Campus Item Recovery Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #172554;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: white;
+            background: #dc2626;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .logout:hover {
+            background: #b91c1c;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+        .welcome {
+            background: white;
+            padding: 28px;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            color: #172554;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .role {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .section-title {
+            margin-bottom: 18px;
+            color: #172554;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+        }
+
+        .card h3 {
+            color: #172554;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 11px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .green {
+            background: #16a34a;
+        }
+
+        .green:hover {
+            background: #15803d;
+        }
+
+        .orange {
+            background: #ea580c;
+        }
+
+        .orange:hover {
+            background: #c2410c;
+        }
+
+        .purple {
+            background: #7c3aed;
+        }
+
+        .purple:hover {
+            background: #6d28d9;
+        }
+
+        .dark {
+            background: #334155;
+        }
+
+        .dark:hover {
+            background: #1e293b;
+        }
+
+        .notification {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        .admin-card {
+            background: #ede9fe;
+            border: 1px solid #c4b5fd;
+        }
+
+        .footer {
+            text-align: center;
+            color: #94a3b8;
+            padding: 35px 10px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 17px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .welcome {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Campus Item Recovery Portal
+        </div>
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="container">
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h1>
+                Welcome, {{ name }}! 👋
+            </h1>
+
+            <p>
+                Manage your lost and found items from one place.
+            </p>
+
+            <span class="role">
+                {{ role|capitalize }}
+            </span>
+
+            {% if unread_notifications > 0 %}
+
+                <div class="notification">
+
+                    🔔 You have
+                    {{ unread_notifications }}
+                    unread notification{% if unread_notifications != 1 %}s{% endif %}.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if role == "admin" %}
+
+
+            <!-- ADMIN -->
+
+            <h2 class="section-title">
+                Admin Dashboard
+            </h2>
+
+            <div class="cards">
+
+                <div class="card admin-card">
+
+                    <h3>
+                        Admin Control Panel
+                    </h3>
+
+                    <p>
+                        Manage found items, lost items,
+                        claims and users.
+                    </p>
+
+                    <a href="/admin-dashboard" class="btn purple">
+                        Open Admin Dashboard
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- USER FEATURES -->
+
+            <h2 class="section-title">
+                Item Recovery
+            </h2>
+
+            <div class="cards">
+
+
+                <!-- REPORT LOST -->
+
+                <div class="card">
+
+                    <h3>
+                        🔴 Report Lost Item
+                    </h3>
+
+                    <p>
+                        Report an item that you have lost
+                        on campus.
+                    </p>
+
+                    <a href="/report-lost" class="btn">
+                        Report Lost
+                    </a>
+
+                </div>
+
+
+                <!-- REPORT FOUND -->
+
+                <div class="card">
+
+                    <h3>
+                        🟢 Report Found Item
+                    </h3>
+
+                    <p>
+                        Report an item that you found
+                        on campus.
+                    </p>
+
+                    <a href="/report-found" class="btn green">
+                        Report Found
+                    </a>
+
+                </div>
+
+
+                <!-- FOUND ITEMS -->
+
+                <div class="card">
+
+                    <h3>
+                        🔎 Found Items
+                    </h3>
+
+                    <p>
+                        Browse items received and verified
+                        by the Admin.
+                    </p>
+
+                    <a href="/found-items" class="btn orange">
+                        View Found Items
+                    </a>
+
+                </div>
+
+
+                <!-- MATCHES -->
+
+                <div class="card">
+
+                    <h3>
+                        🎯 Item Matches
+                    </h3>
+
+                    <p>
+                        Check whether your lost items
+                        match any found items.
+                    </p>
+
+                    <a href="/matches" class="btn purple">
+                        View Matches
+                    </a>
+
+                </div>
+
+
+                <!-- MY LOST ITEMS -->
+
+                <div class="card">
+
+                    <h3>
+                        📋 My Lost Items
+                    </h3>
+
+                    <p>
+                        View all the lost items
+                        you have reported.
+                    </p>
+
+                    <a href="/my-lost-items" class="btn dark">
+                        View My Lost Items
+                    </a>
+
+                </div>
+
+
+                <!-- MY CLAIMS -->
+
+                <div class="card">
+
+                    <h3>
+                        📦 My Claims
+                    </h3>
+
+                    <p>
+                        Track the status of your
+                        item claim requests.
+                    </p>
+
+                    <a href="/my-claims" class="btn purple">
+                        View My Claims
+                    </a>
+
+                </div>
+
+
+                <!-- NOTIFICATIONS -->
+
+                <div class="card">
+
+                    <h3>
+                        🔔 Notifications
+                    </h3>
+
+                    <p>
+                        View updates about your claims
+                        and recovery requests.
+                    </p>
+
+                    <a href="/notifications" class="btn orange">
+                        View Notifications
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        Campus Item Recovery Portal<br>
+        Lost & Found Management System
+
+    </div>
+
+
+</body>
+
+</html>
+
