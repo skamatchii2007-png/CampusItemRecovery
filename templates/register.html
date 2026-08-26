@@ -1,0 +1,700 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Account | Campus Item Recovery Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(37, 99, 235, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(14, 165, 233, 0.15),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f8fafc
+                );
+
+            color: #1e293b;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 1020px;
+
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 24px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 65px rgba(15, 23, 42, 0.12);
+        }
+
+        /* LEFT PANEL */
+
+        .left-panel {
+            padding: 48px 38px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #172554,
+                    #1e3a8a
+                );
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand-icon {
+            width: 66px;
+            height: 66px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,0.14);
+
+            font-size: 31px;
+
+            margin-bottom: 22px;
+        }
+
+        .left-panel h1 {
+            font-size: 32px;
+            line-height: 1.15;
+
+            margin-bottom: 14px;
+        }
+
+        .left-panel h1 span {
+            color: #93c5fd;
+        }
+
+        .left-panel p {
+            color: #dbeafe;
+
+            line-height: 1.7;
+
+            font-size: 15px;
+
+            margin-bottom: 28px;
+        }
+
+        .benefits {
+            display: grid;
+            gap: 13px;
+        }
+
+        .benefit {
+            display: flex;
+            gap: 11px;
+            align-items: flex-start;
+
+            color: #eff6ff;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        .benefit-icon {
+            width: 26px;
+            height: 26px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background: rgba(255,255,255,0.14);
+
+            font-size: 13px;
+        }
+
+        /* RIGHT PANEL */
+
+        .right-panel {
+            padding: 42px 42px;
+        }
+
+        .form-header {
+            margin-bottom: 28px;
+        }
+
+        .form-header h2 {
+            color: #172554;
+
+            font-size: 29px;
+
+            margin-bottom: 7px;
+        }
+
+        .form-header p {
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        /* FLASH */
+
+        .flash-container {
+            margin-bottom: 20px;
+        }
+
+        .flash {
+            padding: 12px 14px;
+
+            border-radius: 9px;
+
+            margin-bottom: 8px;
+
+            background: #fee2e2;
+            color: #991b1b;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        /* FORM */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 13px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #94a3b8;
+
+            font-size: 16px;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 13px 14px 13px 42px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            background: #ffffff;
+
+            color: #1e293b;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        select {
+            padding-left: 14px;
+            cursor: pointer;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .hint {
+            margin-top: 6px;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+        }
+
+        .submit-btn {
+            width: 100%;
+
+            margin-top: 8px;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 10px 22px rgba(37, 99, 235, 0.22);
+        }
+
+        .login-link {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .home-link {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 13px;
+
+            color: #64748b;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .home-link:hover {
+            color: #2563eb;
+        }
+
+        .footer {
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        @media (max-width: 800px) {
+
+            .wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                padding: 30px;
+            }
+
+            .right-panel {
+                padding: 32px 28px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 14px;
+            }
+
+            .left-panel,
+            .right-panel {
+                padding: 25px 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class="wrapper">
+
+
+        <!-- LEFT -->
+
+        <section class="left-panel">
+
+            <div class="brand-icon">
+                🎓
+            </div>
+
+            <h1>
+                Join the
+                <span>Campus Recovery</span>
+                Portal
+            </h1>
+
+            <p>
+                Create your Student or Staff account and
+                access the complete campus lost &amp; found
+                recovery system.
+            </p>
+
+
+            <div class="benefits">
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        Report lost and found items easily.
+                    </div>
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+                        🔎
+                    </div>
+
+                    <div>
+                        Find possible matches automatically.
+                    </div>
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+                        🔔
+                    </div>
+
+                    <div>
+                        Track claims and recovery notifications.
+                    </div>
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+                        🛡️
+                    </div>
+
+                    <div>
+                        Keep your recovery requests organized.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT -->
+
+        <section class="right-panel">
+
+
+            <div class="form-header">
+
+                <h2>
+                    Create Account
+                </h2>
+
+                <p>
+                    Enter your details to create a new Student
+                    or Staff account.
+                </p>
+
+            </div>
+
+
+            {% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                    <div class="flash-container">
+
+                        {% for message in messages %}
+
+                            <div class="flash">
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <form
+                method="POST"
+                action="/register"
+            >
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email / User ID
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="text"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email or User ID"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="hint">
+                        This will be used to log in to the portal.
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ROLE -->
+
+                <div class="form-group">
+
+                    <label for="role">
+                        Register As
+                    </label>
+
+                    <select
+                        id="role"
+                        name="role"
+                        required
+                    >
+
+                        <option value="">
+                            Select Role
+                        </option>
+
+                        <option value="student">
+                            Student
+                        </option>
+
+                        <option value="staff">
+                            Staff
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    Create Account →
+                </button>
+
+
+            </form>
+
+
+            <a
+                href="/login"
+                class="login-link"
+            >
+                Already have an account? Login
+            </a>
+
+
+            <a
+                href="/"
+                class="home-link"
+            >
+                ← Back to Home
+            </a>
+
+
+            <div class="footer">
+
+                Campus Item Recovery Portal<br>
+                Lost &amp; Found Management System
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+</body>
+
+</html>
+
