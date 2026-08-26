@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        My Lost Items - Campus Item Recovery Portal
+    </title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .header {
+            background: #1f4e79;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .item-card {
+            background: #fafafa;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 18px;
+            border-radius: 8px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .reported {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .matched {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .claimed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .resolved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px;
+            color: #666;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 18px;
+            margin-top: 20px;
+            margin-right: 8px;
+            border-radius: 6px;
+            color: white;
+            background: #1f4e79;
+            text-decoration: none;
+        }
+
+        .match-button {
+            background: #2e7d32;
+        }
+
+        .logout {
+            background: #555;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>
+            Campus Item Recovery Portal
+        </h1>
+
+        <h2>
+            My Lost Items
+        </h2>
+
+        <p>
+            Items reported by you
+        </p>
+
+    </div>
+
+
+
+    <!-- LOST ITEMS -->
+
+    <div class="card">
+
+        <h2>
+            📋 My Lost Items
+        </h2>
+
+
+        {% if lost_items %}
+
+
+            {% for item in lost_items %}
+
+
+                <div class="item-card">
+
+
+                    <h3>
+                        📌 {{ item.item_name }}
+                    </h3>
+
+
+                    <p>
+
+                        <strong>
+                            Category:
+                        </strong>
+
+                        {{ item.category }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Lost Location:
+                        </strong>
+
+                        {{ item.lost_location }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Lost Date:
+                        </strong>
+
+                        {{ item.lost_date }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Description:
+                        </strong>
+
+                        {{ item.description }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Status:
+                        </strong>
+
+
+                        {% if item.status == "Reported" %}
+
+                            <span class="status reported">
+                                Reported
+                            </span>
+
+                        {% elif item.status == "Matched" %}
+
+                            <span class="status matched">
+                                Possible Match Found
+                            </span>
+
+                        {% elif item.status == "Claimed" %}
+
+                            <span class="status claimed">
+                                Claim Submitted
+                            </span>
+
+                        {% elif item.status == "Resolved" %}
+
+                            <span class="status resolved">
+                                Resolved
+                            </span>
+
+                        {% else %}
+
+                            <span class="status reported">
+                                {{ item.status }}
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                <h3>
+                    No Lost Items Reported
+                </h3>
+
+                <p>
+                    You have not reported any lost items yet.
+                </p>
+
+                <a
+                    href="/report-lost"
+                    class="button"
+                >
+
+                    Report a Lost Item
+
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- NAVIGATION -->
+
+    <div class="card">
+
+        <a
+            href="/matches"
+            class="button match-button"
+        >
+
+            🔎 Check Possible Matches
+
+        </a>
+
+
+        <a
+            href="/dashboard"
+            class="button"
+        >
+
+            ← Back to Dashboard
+
+        </a>
+
+
+        <a
+            href="/logout"
+            class="button logout"
+        >
+
+            Logout
+
+        </a>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
