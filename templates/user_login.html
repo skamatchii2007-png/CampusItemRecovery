@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Student / Staff Login | Campus Item Recovery Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(37, 99, 235, 0.20),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(14, 165, 233, 0.15),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f8fafc
+                );
+
+            color: #1e293b;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 960px;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .brand-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            background: #172554;
+            color: white;
+
+            font-size: 32px;
+
+            box-shadow:
+                0 12px 30px rgba(23, 37, 84, 0.20);
+        }
+
+        .brand h1 {
+            color: #172554;
+            font-size: 29px;
+            margin-bottom: 7px;
+        }
+
+        .brand p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 520px;
+
+            margin: 0 auto;
+
+            padding: 38px;
+
+            background: rgba(255,255,255,0.96);
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 22px 55px rgba(15, 23, 42, 0.11);
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .card-icon {
+            width: 54px;
+            height: 54px;
+
+            margin: 0 auto 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background: #dbeafe;
+
+            font-size: 25px;
+        }
+
+        .card-header h2 {
+            color: #172554;
+            font-size: 25px;
+            margin-bottom: 7px;
+        }
+
+        .card-header p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .flash {
+            background: #fee2e2;
+            color: #991b1b;
+
+            padding: 12px 14px;
+
+            border-radius: 9px;
+
+            margin-bottom: 18px;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+
+            color: #334155;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #94a3b8;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px 14px 13px 42px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            background: white;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37,99,235,0.12);
+        }
+
+        .submit-btn {
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 7px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #2563eb;
+            color: white;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 10px 22px rgba(37,99,235,0.22);
+        }
+
+        .secondary-link {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 17px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .secondary-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 12px;
+
+            color: #64748b;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .back-link:hover {
+            color: #2563eb;
+        }
+
+        .footer {
+            text-align: center;
+
+            margin-top: 23px;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 27px 21px;
+            }
+
+            .brand h1 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🎓
+            </div>
+
+            <h1>
+                Campus Item Recovery Portal
+            </h1>
+
+            <p>
+                Lost &amp; Found Management System
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="card-icon">
+                    👤
+                </div>
+
+                <h2>
+                    Student / Staff Login
+                </h2>
+
+                <p>
+                    Login to manage your campus lost and found recovery requests.
+                </p>
+
+            </div>
+
+
+            {% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        <div class="flash">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <form
+                method="POST"
+                action="/user-login"
+            >
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email / User ID
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="text"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email or User ID"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    Login to Portal →
+                </button>
+
+            </form>
+
+
+            <a
+                href="/register"
+                class="secondary-link"
+            >
+                New Student / Staff? Create Account
+            </a>
+
+
+            <a
+                href="/login"
+                class="back-link"
+            >
+                ← Back to Login Options
+            </a>
+
+
+        </div>
+
+
+        <div class="footer">
+
+            Campus Item Recovery Portal<br>
+            Lost &amp; Found Management System
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
