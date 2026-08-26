@@ -1,0 +1,568 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Users | Campus Item Recovery Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: #172554;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 14px;
+            border-radius: 7px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .logout {
+            background: #dc2626;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1150px;
+            margin: 30px auto;
+        }
+
+        .header {
+            background: white;
+            padding: 28px;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #172554;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 17px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            background: #2563eb;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .add {
+            background: #16a34a;
+        }
+
+        .add:hover {
+            background: #15803d;
+        }
+
+        .flash {
+            background: #dcfce7;
+            color: #166534;
+            padding: 14px 18px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th {
+            background: #172554;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .name {
+            font-weight: bold;
+            color: #172554;
+        }
+
+        .email {
+            color: #475569;
+        }
+
+        .role {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .student {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .staff {
+            background: #f3e8ff;
+            color: #7e22ce;
+        }
+
+        .admin {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .active {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 15px;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .inactive {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 15px;
+            background: #fee2e2;
+            color: #991b1b;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .action-form {
+            display: inline;
+        }
+
+        .action-button {
+            border: none;
+            color: white;
+            padding: 9px 13px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .deactivate {
+            background: #dc2626;
+        }
+
+        .deactivate:hover {
+            background: #b91c1c;
+        }
+
+        .activate {
+            background: #16a34a;
+        }
+
+        .activate:hover {
+            background: #15803d;
+        }
+
+        .protected {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 45px;
+            color: #64748b;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 35px 10px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Campus Item Recovery Portal
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/admin-dashboard">
+                Dashboard
+            </a>
+
+            <a
+                href="/logout"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+
+    <div class="container">
+
+
+        <div class="header">
+
+            <h1>
+                👥 Manage Users
+            </h1>
+
+            <p>
+                View registered students and staff members
+                and manage their account status.
+            </p>
+
+
+            <div class="buttons">
+
+                <a
+                    href="/admin-dashboard"
+                    class="button"
+                >
+                    ← Admin Dashboard
+                </a>
+
+                <a
+                    href="/admin/add-user"
+                    class="button add"
+                >
+                    + Add New User
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- FLASH MESSAGES -->
+
+        {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="flash">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- USERS TABLE -->
+
+        <div class="table-container">
+
+            {% if users %}
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Email / User ID
+                            </th>
+
+                            <th>
+                                Role
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for user in users %}
+
+                            <tr>
+
+                                <td>
+                                    {{ user.id }}
+                                </td>
+
+
+                                <td>
+
+                                    <span class="name">
+                                        {{ user.name }}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="email">
+                                        {{ user.email }}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    {% if user.role == "student" %}
+
+                                        <span class="role student">
+                                            Student
+                                        </span>
+
+                                    {% elif user.role == "staff" %}
+
+                                        <span class="role staff">
+                                            Staff
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="role admin">
+                                            Admin
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td>
+
+                                    {% if user.active %}
+
+                                        <span class="active">
+                                            Active
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="inactive">
+                                            Inactive
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td>
+
+                                    {% if user.role == "admin" %}
+
+                                        <span class="protected">
+                                            🔒 Protected
+                                        </span>
+
+                                    {% else %}
+
+
+                                        {% if user.active %}
+
+                                            <form
+                                                method="POST"
+                                                action="/admin/deactivate-user/{{ user.id }}"
+                                                class="action-form"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="action-button deactivate"
+                                                >
+                                                    Deactivate
+                                                </button>
+
+                                            </form>
+
+                                        {% else %}
+
+                                            <form
+                                                method="POST"
+                                                action="/admin/activate-user/{{ user.id }}"
+                                                class="action-form"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="action-button activate"
+                                                >
+                                                    Activate
+                                                </button>
+
+                                            </form>
+
+                                        {% endif %}
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+            {% else %}
+
+                <div class="empty">
+
+                    <h2>
+                        No Users Found
+                    </h2>
+
+                    <p>
+                        No Student or Staff accounts are currently registered.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer">
+
+        Campus Item Recovery Portal<br>
+        Lost & Found Management System
+
+    </div>
+
+
+</body>
+
+</html>
+
